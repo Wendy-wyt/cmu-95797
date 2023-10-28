@@ -168,3 +168,6 @@ data/
 dbt_packages/
 logs/
 .DS_Store
+
+# security file
+security/
