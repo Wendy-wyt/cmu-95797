@@ -1,3 +1,6 @@
+.echo on
+
+show tables;
 describe bike_data;
 describe central_park_weather;
 describe fhv_bases;

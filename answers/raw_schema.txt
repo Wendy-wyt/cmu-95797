@@ -1,19 +1,30 @@
+
+show tables;
+'name'
+'bike_data'
+'central_park_weather'
+'fhv_bases'
+'fhv_tripdata'
+'fhvhv_tripdata'
+'green_tripdata'
+'yellow_tripdata'
+describe bike_data;
 'column_name','column_type','null','key','default','extra'
-'tripduration','BIGINT','YES',NULL,NULL,NULL
-'starttime','TIMESTAMP','YES',NULL,NULL,NULL
-'stoptime','TIMESTAMP','YES',NULL,NULL,NULL
-'start station id','BIGINT','YES',NULL,NULL,NULL
+'tripduration','VARCHAR','YES',NULL,NULL,NULL
+'starttime','VARCHAR','YES',NULL,NULL,NULL
+'stoptime','VARCHAR','YES',NULL,NULL,NULL
+'start station id','VARCHAR','YES',NULL,NULL,NULL
 'start station name','VARCHAR','YES',NULL,NULL,NULL
-'start station latitude','DOUBLE','YES',NULL,NULL,NULL
-'start station longitude','DOUBLE','YES',NULL,NULL,NULL
-'end station id','BIGINT','YES',NULL,NULL,NULL
+'start station latitude','VARCHAR','YES',NULL,NULL,NULL
+'start station longitude','VARCHAR','YES',NULL,NULL,NULL
+'end station id','VARCHAR','YES',NULL,NULL,NULL
 'end station name','VARCHAR','YES',NULL,NULL,NULL
-'end station latitude','DOUBLE','YES',NULL,NULL,NULL
-'end station longitude','DOUBLE','YES',NULL,NULL,NULL
-'bikeid','BIGINT','YES',NULL,NULL,NULL
+'end station latitude','VARCHAR','YES',NULL,NULL,NULL
+'end station longitude','VARCHAR','YES',NULL,NULL,NULL
+'bikeid','VARCHAR','YES',NULL,NULL,NULL
 'usertype','VARCHAR','YES',NULL,NULL,NULL
-'birth year','BIGINT','YES',NULL,NULL,NULL
-'gender','BIGINT','YES',NULL,NULL,NULL
+'birth year','VARCHAR','YES',NULL,NULL,NULL
+'gender','VARCHAR','YES',NULL,NULL,NULL
 'ride_id','VARCHAR','YES',NULL,NULL,NULL
 'rideable_type','VARCHAR','YES',NULL,NULL,NULL
 'started_at','VARCHAR','YES',NULL,NULL,NULL
@@ -28,23 +39,26 @@
 'end_lng','VARCHAR','YES',NULL,NULL,NULL
 'member_casual','VARCHAR','YES',NULL,NULL,NULL
 'filename','VARCHAR','YES',NULL,NULL,NULL
+describe central_park_weather;
 'column_name','column_type','null','key','default','extra'
 'STATION','VARCHAR','YES',NULL,NULL,NULL
 'NAME','VARCHAR','YES',NULL,NULL,NULL
-'DATE','DATE','YES',NULL,NULL,NULL
-'AWND','DOUBLE','YES',NULL,NULL,NULL
-'PRCP','DOUBLE','YES',NULL,NULL,NULL
-'SNOW','DOUBLE','YES',NULL,NULL,NULL
-'SNWD','DOUBLE','YES',NULL,NULL,NULL
-'TMAX','BIGINT','YES',NULL,NULL,NULL
-'TMIN','BIGINT','YES',NULL,NULL,NULL
+'DATE','VARCHAR','YES',NULL,NULL,NULL
+'AWND','VARCHAR','YES',NULL,NULL,NULL
+'PRCP','VARCHAR','YES',NULL,NULL,NULL
+'SNOW','VARCHAR','YES',NULL,NULL,NULL
+'SNWD','VARCHAR','YES',NULL,NULL,NULL
+'TMAX','VARCHAR','YES',NULL,NULL,NULL
+'TMIN','VARCHAR','YES',NULL,NULL,NULL
 'filename','VARCHAR','YES',NULL,NULL,NULL
+describe fhv_bases;
 'column_name','column_type','null','key','default','extra'
-'column0','VARCHAR','YES',NULL,NULL,NULL
-'column1','VARCHAR','YES',NULL,NULL,NULL
-'column2','VARCHAR','YES',NULL,NULL,NULL
-'column3','VARCHAR','YES',NULL,NULL,NULL
+'base_number','VARCHAR','YES',NULL,NULL,NULL
+'base_name','VARCHAR','YES',NULL,NULL,NULL
+'dba','VARCHAR','YES',NULL,NULL,NULL
+'dba_category','VARCHAR','YES',NULL,NULL,NULL
 'filename','VARCHAR','YES',NULL,NULL,NULL
+describe fhv_tripdata;
 'column_name','column_type','null','key','default','extra'
 'dispatching_base_num','VARCHAR','YES',NULL,NULL,NULL
 'pickup_datetime','TIMESTAMP','YES',NULL,NULL,NULL
@@ -54,6 +68,7 @@
 'SR_Flag','INTEGER','YES',NULL,NULL,NULL
 'Affiliated_base_number','VARCHAR','YES',NULL,NULL,NULL
 'filename','VARCHAR','YES',NULL,NULL,NULL
+describe fhvhv_tripdata;
 'column_name','column_type','null','key','default','extra'
 'hvfhs_license_num','VARCHAR','YES',NULL,NULL,NULL
 'dispatching_base_num','VARCHAR','YES',NULL,NULL,NULL
@@ -80,6 +95,7 @@
 'wav_request_flag','VARCHAR','YES',NULL,NULL,NULL
 'wav_match_flag','VARCHAR','YES',NULL,NULL,NULL
 'filename','VARCHAR','YES',NULL,NULL,NULL
+describe green_tripdata;
 'column_name','column_type','null','key','default','extra'
 'VendorID','BIGINT','YES',NULL,NULL,NULL
 'lpep_pickup_datetime','TIMESTAMP','YES',NULL,NULL,NULL
@@ -102,6 +118,7 @@
 'trip_type','DOUBLE','YES',NULL,NULL,NULL
 'congestion_surcharge','DOUBLE','YES',NULL,NULL,NULL
 'filename','VARCHAR','YES',NULL,NULL,NULL
+describe yellow_tripdata;
 'column_name','column_type','null','key','default','extra'
 'VendorID','BIGINT','YES',NULL,NULL,NULL
 'tpep_pickup_datetime','TIMESTAMP','YES',NULL,NULL,NULL
