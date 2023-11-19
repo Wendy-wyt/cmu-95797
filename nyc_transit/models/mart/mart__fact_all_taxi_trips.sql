@@ -1,3 +1,4 @@
+-- A valid trip should have non-null datetimes and locations
 with trips_renamed as (
 select 
     'fhv' as type, 
@@ -41,3 +42,9 @@ select
     pulocationid, 
     dolocationid
 from trips_renamed
+-- exclude trips without invalid locations or datetimes
+where pickup_datetime is not null
+    and dropoff_datetime is not null
+    and pulocationid is not null
+    and dolocationid is not null
+    and duration_sec >=0

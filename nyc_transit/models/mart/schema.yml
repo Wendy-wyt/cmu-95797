@@ -8,13 +8,27 @@ models:
               - unique
 
       - name: station_name
-        description: ""
+        description: "bike station name"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: VARCHAR
 
       - name: station_lat
-        description: ""
+        description: "station latitude"
+        tests: 
+          - dbt_expectations.expect_column_to_exist 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: DOUBLE
+          - not_null
 
       - name: station_lng
-        description: ""
+        description: "station longitude"
+        tests: 
+          - dbt_expectations.expect_column_to_exist 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: DOUBLE
+          - not_null
 
   - name: mart__dim_locations
     description: "taxi locations, used to join with pulocationid and dolocationid,
@@ -22,90 +36,201 @@ models:
     columns:
       - name: locationid
         description: "primary key"
+        tests:
+          - unique
+          - not_null
 
       - name: borough
-        description: ""
+        description: "A borough contains several zones"
+        tests:
+          - dbt_expectations.expect_column_to_exist 
+          - not_null
 
       - name: zone
-        description: ""
+        description: "the zone name of the locationid"
+        tests:
+          - dbt_expectations.expect_column_to_exist 
+          - not_null
 
       - name: service_zone
-        description: ""
+        description: "A service zone contains several boroughs"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - not_null
 
   - name: mart__fact_all_bike_trips
     description: "bike trip data normalised with station data stripped out to dim"
     columns:
       - name: started_at_ts
-        description: ""
+        description: "starting timestamp"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: TIMESTAMP
 
       - name: ended_at_ts
-        description: ""
+        description: "ending timestamp"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: TIMESTAMP
 
       - name: duration_min
-        description: ""
+        description: "duration in minutes"
+        tests: 
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: BIGINT
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
       - name: duration_sec
-        description: ""
+        description: "duration in seconds"
+        tests: 
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: BIGINT
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
       - name: start_station_id
-        description: ""
+        description: "start station id"
+        tests: 
+          - not_null
 
       - name: end_station_id
-        description: ""
+        description: "end station id"
+        tests: 
+          - not_null
 
   - name: mart__fact_all_taxi_trips
     description: "all taxi trip data for analysis"
     columns:
       - name: type
-        description: ""
+        description: "type of trips"
+        tests:
+          - accepted_values:
+                values: ['fhv','fhvhv','green','yellow']
+          - not_null
 
       - name: pickup_datetime
-        description: ""
+        description: "pickup timestamp"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: TIMESTAMP
+          - dbt_expectations.expect_column_to_exist
+          - not_null
 
       - name: dropoff_datetime
-        description: ""
+        description: "dropoff timestamp"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: TIMESTAMP
+          - dbt_expectations.expect_column_to_exist
+          - not_null
 
       - name: duration_min
-        description: ""
+        description: "trip duration in minutes"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: BIGINT
+          - dbt_expectations.expect_column_to_exist
+          - not_null
 
       - name: duration_sec
-        description: ""
+        description: "trip duration in seconds"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: BIGINT
+          - dbt_expectations.expect_column_to_exist
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
       - name: pulocationid
-        description: ""
+        description: "pickup location id"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: DOUBLE
+          - dbt_expectations.expect_column_to_exist
+          - not_null
 
       - name: dolocationid
-        description: ""
+        description: "dropoff location id"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: DOUBLE
+          - dbt_expectations.expect_column_to_exist
+          - not_null
 
   - name: mart__fact_all_trips_daily
     description: "all trips including bikes and taxis grouped by day, with averaged trip duration"
     columns:
       - name: type
-        description: ""
+        description: "type of trips"
+        tests:
+          - accepted_values:
+                values: ['fhv','fhvhv','green','yellow','bike']
+          - not_null
 
       - name: date
-        description: ""
+        description: "date of trip"
+        tests:
+          - not_null
 
       - name: trips
-        description: ""
+        description: "number of trips in each date"
+        tests:
+          - dbt_expectations.expect_column_to_exist
 
       - name: average_trip_duration_min
-        description: ""
+        description: "average trip duration in minutes in each date"
+        tests:
+          - dbt_expectations.expect_column_to_exist
 
   - name: mart__fact_all_trips
     description: "all trips including bikes and taxis with duration"
     columns:
       - name: type
-        description: ""
+        description: "type of trips"
+        tests:
+          - accepted_values:
+                values: ['fhv','fhvhv','green','yellow','bike']
+          - not_null
 
       - name: started_at_ts
-        description: ""
+        description: "start timestamp"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: TIMESTAMP
 
       - name: ended_at_ts
-        description: ""
+        description: "end timestamp"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: TIMESTAMP
 
       - name: duration_min
-        description: ""
+        description: "duration in minutes"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: BIGINT
+          - dbt_expectations.expect_column_to_exist
+          - not_null
+
 
       - name: duration_sec
-        description: ""
+        description: "duration in seconds"
+        tests: 
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: BIGINT
+          - dbt_expectations.expect_column_to_exist
+          - not_null

@@ -5,4 +5,4 @@ from
     {{ ref('mart__fact_all_taxi_trips') }} as trips
         left join {{ ref('taxi+_zone_lookup') }} as zones 
             on trips.dolocationid=zones.locationid
-where service_zone = 'Airports' or service_zone='EWR';
+where service_zone = 'Airports' or service_zone='EWR'

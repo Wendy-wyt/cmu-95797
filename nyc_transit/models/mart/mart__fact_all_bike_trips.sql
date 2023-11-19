@@ -6,3 +6,4 @@ select
     start_station_id,
     end_station_id
 from {{ ref('stg__bike_data') }}
+where duration_sec >= 0 

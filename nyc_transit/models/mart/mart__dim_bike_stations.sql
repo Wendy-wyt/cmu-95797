@@ -1,5 +1,5 @@
 -- ref: https://www.geeksforgeeks.org/how-to-select-the-first-row-of-each-group-by-in-sql/
--- used in getting the first row in each group
+-- used in getting the first row for each station id
 with bikeData as (
 select
     distinct
@@ -25,7 +25,9 @@ select
 from (
     select 
         *,
-        ROW_NUMBER() OVER (PARTITION BY station_id ORDER BY station_lat, station_lng) AS rn
+        ROW_NUMBER() OVER (PARTITION BY station_id ORDER BY station_name, station_lat, station_lng) AS rn
     from bikeData
 )
-where rn=1
+where rn=1 
+    and station_lat is not null 
+    and station_lng is not null 
