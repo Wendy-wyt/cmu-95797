@@ -1,0 +1,20 @@
+.read nyc_transit/target/compiled/nyc_transit/analyses/bike_trips_and_duration_by_weekday.sql
+-- count & total time of bikes trips by weekday
+select
+    weekday(started_at_ts) as weekday,
+    count(*) as total_trips,
+    sum(duration_sec) as total_trip_duration_secs
+from "main"."mart"."mart__fact_all_bike_trips"
+group by weekday;
+┌─────────┬─────────────┬──────────────────────────┐
+│ weekday │ total_trips │ total_trip_duration_secs │
+│  int64  │    int64    │          int128          │
+├─────────┼─────────────┼──────────────────────────┤
+│       0 │      332596 │                404583591 │
+│       1 │      348070 │                351943093 │
+│       2 │      380845 │                373028416 │
+│       3 │      393231 │                370456227 │
+│       4 │      381687 │                377212194 │
+│       5 │      389980 │                400036304 │
+│       6 │      384893 │                459645034 │
+└─────────┴─────────────┴──────────────────────────┘

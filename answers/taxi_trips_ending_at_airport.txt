@@ -1,0 +1,15 @@
+.read nyc_transit/target/compiled/nyc_transit/analyses/taxi_trips_ending_at_airport.sql
+-- total number of trips ending in service_zones 'Airports' or 'EWR'
+select
+    count(*) as total_trips_ending_at_airports
+from 
+    "main"."mart"."mart__fact_all_taxi_trips" as trips
+        left join "main"."main"."taxi+_zone_lookup" as zones 
+            on trips.dolocationid=zones.locationid
+where service_zone = 'Airports' or service_zone='EWR';
+┌────────────────────────────────┐
+│ total_trips_ending_at_airports │
+│             int64              │
+├────────────────────────────────┤
+│                        1062928 │
+└────────────────────────────────┘

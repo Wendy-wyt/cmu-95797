@@ -1,0 +1,29 @@
+.read nyc_transit/target/compiled/nyc_transit/analyses/inter_borough_taxi_trips_by_weekday.sql
+-- by weekday, count of total trips, trips starting and ending in a different borough, 
+-- and percentage w/ different start/end
+with renamed as (
+select
+    weekday(pickup_datetime) as weekday,
+    (case when pulocationid != dolocationid then 1 else 0 end) as inter_borough
+from "main"."mart"."mart__fact_all_taxi_trips"
+)
+select 
+    weekday, 
+    count(*) as total_trips,
+    sum(inter_borough) as total_inter_borough_trips,
+    total_inter_borough_trips/total_trips*100 as percentage
+from renamed
+group by weekday
+order by weekday
+┌─────────┬─────────────┬───────────────────────────┬───────────────────┐
+│ weekday │ total_trips │ total_inter_borough_trips │    percentage     │
+│  int64  │    int64    │          int128           │      double       │
+├─────────┼─────────────┼───────────────────────────┼───────────────────┤
+│       0 │     5489759 │                   4998923 │ 91.05906106260767 │
+│       1 │     5164489 │                   4566855 │ 88.42801291666997 │
+│       2 │     5360630 │                   4737688 │ 88.37931362545073 │
+│       3 │     5811530 │                   5136769 │ 88.38927098371686 │
+│       4 │     5934122 │                   5285437 │  89.0685597633483 │
+│       5 │     6435769 │                   5742385 │ 89.22608937642106 │
+│       6 │     6688086 │                   6082363 │  90.9432534210834 │
+└─────────┴─────────────┴───────────────────────────┴───────────────────┘
