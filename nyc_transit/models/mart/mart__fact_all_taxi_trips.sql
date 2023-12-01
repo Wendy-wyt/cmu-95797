@@ -42,7 +42,7 @@ select
     pulocationid, 
     dolocationid
 from trips_renamed
--- exclude trips without invalid locations or datetimes
+-- exclude trips without valid locations or datetimes
 where pickup_datetime is not null
     and dropoff_datetime is not null
     and pulocationid is not null
